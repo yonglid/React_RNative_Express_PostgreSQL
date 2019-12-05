@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+// adding in router and link from react router dom, which is just web 
+import {BrowserRouter as Router, Link, Switch, Route} from 'react-router-dom'; 
+
 import axios from 'axios';
 import Zoom from 'react-reveal/Zoom';
 import Flip from 'react-reveal/Flip'
@@ -30,7 +33,7 @@ const SearchStyledButton = styled.button`
 
 const StyledButton = styled.button`
   /* position: absolute; */
-  height: 10%;
+  height: 100%;
   width: 75%;
   top: 100%;
   left:100%;
@@ -53,6 +56,13 @@ const search = <SearchStyledButton>Search</SearchStyledButton>
 const saved = <SearchStyledButton>Saved</SearchStyledButton>
 const profile = <SearchStyledButton>Profile</SearchStyledButton>
 const more = <SearchStyledButton>more</SearchStyledButton>
+const male = <StyledButton>Male</StyledButton>
+const female = <StyledButton>Female</StyledButton>
+const other = <StyledButton>Other</StyledButton>
+const save = <SearchStyledButton> Save </SearchStyledButton>
+
+const profile_gender = <StyledButton>Gender</StyledButton>
+
 const Columns = () =>
   <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 2fr)", gridGap: 10 }}>
     <div>{search}</div>
@@ -61,15 +71,44 @@ const Columns = () =>
     <div>{more}</div>
   </div>
 
-  const Rows = () =>
-  <div style={{ display: "grid", gridTemplateRows: "repeat(3, 1fr)", gridGap: 15 }}>
-    <div><StyledButton>Male</StyledButton></div>
-    <div><StyledButton>Female</StyledButton></div>
-    <div><StyledButton>Other</StyledButton></div>
-    <div><SearchStyledButton> Save </SearchStyledButton></div>
-  </div>
+const Rows = () =>
+<div style={{ display: "grid", gridTemplateRows: "repeat(3, 1fr)", gridGap: 15 }}>
+  <div>{male}</div>
+  <div>{female}</div>
+  <div>{other}</div>
+  <div>{save}</div>
+</div>
 
+const gender = <StyledButton>Gender</StyledButton>
+const age = <StyledButton>Age</StyledButton>
+const special_conditions = <StyledButton> Special Conditions </StyledButton>
 
+const Prof = () => 
+    <div style={{ display: "grid", gridTemplateRows: "repeat(3, 1fr)", gridGap: 15 }}>
+      <div>
+        <Link to="/gender">{gender}</Link>
+      </div>
+      <div>{age}</div>
+      <div>{special_conditions}</div>
+      <Switch>
+        <Route path = "/gender">
+          <Gender />
+        </Route>
+      </Switch>
+    </div>
+    
+
+const Gender = () => 
+  <Router>
+    <div style={{ display: "grid", gridTemplateRows: "repeat(3, 1fr)", gridGap: 15 }}>
+      <div>{male}</div>
+      <div>{female}</div>
+      <div>{other}</div>
+      <div>{save}</div>
+    </div>
+  </Router>
+  
+  
 class App extends Component {
   constructor() {
     super();
@@ -77,35 +116,6 @@ class App extends Component {
       dataku: [],
     };
 }
-
-// klikPost(e){
-//   e.preventDefault();
-//   var url = 'http://localhost:3210/data';
-//   axios.post(url, {
-//     nama: this.inputnama.value,
-//     usia: this.inputusia.value
-//   })
-//   .then(function (response) {
-//     console.log(response);
-//   })
-//   .catch(function (error) {
-//     console.log(error);
-//   });
-//   this.inputnama.value = '';
-//   this.inputusia.value = '';
-// };
-
-// klikGet(e){
-//   e.preventDefault();
-//   var url = 'http://localhost:3210/data';
-//   axios.get(url)
-//   .then((ambilData) => {
-//     console.log(ambilData.data);
-//     this.setState({
-//       dataku: ambilData.data,
-//     })
-//   })
-// };
 
 
 render() {
@@ -115,26 +125,33 @@ render() {
   })
 
   return (
-   <div className="container">
-   <Zoom>
-     <center style={{margin:'25px'}}>
-        <Flip><h3>Profile ♥ </h3></Flip>
+    <Router>
+      <div className="container">
+        <Zoom>
+          <center style={{margin:'25px'}}>
+            <Link to="/profile">
+              <Flip><h3>Profile ♥ </h3></Flip>
+            </Link>
+            <Switch>
+              <Route path = "/profile">
+                <Prof />
+              </Route>
+              <Route path="/gender">
+                <Gender />
+              </Route>
+            </Switch>
 
-     <form>
-  <Columns />
-  <Rows />
-
-
-</form>
-
-     <div>
-       { dataPostgre }
-     </div>
-     </center>
-     </Zoom>
-   </div>
+            <div>
+              { dataPostgre }
+            </div>
+            </center>
+          </Zoom>
+        </div>
+    </Router>
   );
- }
- }
+}
+
+}
+
 
 export default App;
