@@ -84,30 +84,53 @@ const age = <StyledButton>Age</StyledButton>
 const special_conditions = <StyledButton> Special Conditions </StyledButton>
 
 const Prof = () => 
-    <div style={{ display: "grid", gridTemplateRows: "repeat(3, 1fr)", gridGap: 15 }}>
-      <div>
-        <Link to="/gender">{gender}</Link>
-      </div>
-      <div>{age}</div>
-      <div>{special_conditions}</div>
-      <Switch>
-        <Route path = "/gender">
-          <Gender />
-        </Route>
-      </Switch>
+  <div style={{ display: "grid", gridTemplateRows: "repeat(3, 1fr)", gridGap: 15 }}>
+    <div>
+      <Link to="/gender">{gender}</Link>
     </div>
+    <div>{age}</div>
+    <div>{special_conditions}</div>
+    <Switch>
+      <Route path = "/gender">
+        <Gender />
+      </Route>
+    </Switch>
+  </div>
     
 
 const Gender = () => 
+  <div style={{ display: "grid", gridTemplateRows: "repeat(3, 1fr)", gridGap: 15 }}>
+    <Flip><h3>Gender ♥ </h3></Flip>
+    <div>{male}</div>
+    <div>{female}</div>
+    <div>{other}</div>
+    <div>{save}</div>
+  </div>
+
+const Age = () => 
   <Router>
-    <div style={{ display: "grid", gridTemplateRows: "repeat(3, 1fr)", gridGap: 15 }}>
-      <div>{male}</div>
-      <div>{female}</div>
-      <div>{other}</div>
-      <div>{save}</div>
-    </div>
+    <Flip><h3>Age ♥ </h3></Flip>
   </Router>
-  
+
+const Home = () => 
+  <div>
+    <h2>Coming soon :) </h2>
+    <Link to="/">
+            <Flip><h3>ShelterHacks ♥ </h3></Flip>
+    </Link>
+    <Link to="/profile">
+      <Flip><h3>Profile ♥ </h3></Flip>
+    </Link>
+    <Switch>
+      <Route path = "/profile">
+        <Prof />
+      </Route>
+      <Route path = "/">
+        <Home />
+      </Route>
+    </Switch>
+  </div>
+    
   
 class App extends Component {
   constructor() {
@@ -129,9 +152,13 @@ render() {
       <div className="container">
         <Zoom>
           <center style={{margin:'25px'}}>
+            <Link to="/">
+              <Flip><h3>ShelterHacks ♥ </h3></Flip>
+            </Link>
             <Link to="/profile">
               <Flip><h3>Profile ♥ </h3></Flip>
             </Link>
+
             <Switch>
               <Route path = "/profile">
                 <Prof />
@@ -139,6 +166,7 @@ render() {
               <Route path="/gender">
                 <Gender />
               </Route>
+              
             </Switch>
 
             <div>
